@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% block title %} BD {% endblock %}
+{% block tablas %}
+  <div class="input-field">
+    <input id="tabla" type="text">
+    <label for="tabla">Nombre</label>
+  </div>
+{% endblock%}
+{% block campos %}
+  <div class="input-field">
+    <input id="campos" type="text">
+    <label for="campos">Nombre</label>
+  </div>
+{% endblock%}
+{% block registros %}
+  <form action="#">
+    <div class="file-field input-field">
+      <div class="btn">
+        <span>documento</span>
+        <input type="file">
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text">
+      </div>
+    </div>
+  </form>
+{% endblock%}
