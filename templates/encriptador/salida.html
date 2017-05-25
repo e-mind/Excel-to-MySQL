@@ -1,0 +1,17 @@
+{% extends 'base/base1.html' %}
+{% block title %} Desencriptador {% endblock %}
+{% block titulo %} Desencriptador de texto {% endblock %}
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  <div class="row">
+    <div class="input-field col s12">
+      <textarea id="textarea1" class="materialize-textarea" name="datos"></textarea>
+      <label for="textarea1">Ingresa el texto a encriptar</label>
+    </div>
+  <div class="row col s12 m12 l4 offset-m1 offset-l8">
+    <button  class="btn waves-effect waves-light" type="submit">Desencriptar
+    </button>
+  </div>
+</form>
+{% endblock %}
