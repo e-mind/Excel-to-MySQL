@@ -19,49 +19,15 @@
     <div class="row">
       <div class="col s12 m6 l4 offset-m2 offset-l4">
           <div class="row">
-            <p class="titulo" style="margin: 0px;">Crear una BD de forma sencilla</p>
+            <p class="titulo" style="margin: 0px;">{% block titulo %}{% endblock %}</p>
           </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col s12 m8 l6 offset-m2 offset-l3"><div class="row">
-        <ul class="collapsible" data-collapsible="accordion">
-        <li>
-          <div class="collapsible-header"><i class="material-icons">view_headline</i>Base de datos</div>
-          <div class="collapsible-body">
-            <div class="input-field">
-              <input id="BD" type="text">
-              <label for="BD">Nombre</label>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="collapsible-header">
-              <i class="material-icons">view_week</i>Tabla
-          </div>
-          <div class="collapsible-body">
-            {% block tablas %} {% endblock%}
-          </div>
-        </li>
-        <li>
-          <div class="collapsible-header"><i class="material-icons">input</i>Campos</div>
-          <div class="collapsible-body">
-            {% block campos %} {% endblock%}
-          </div>
-        </li>
-        <li>
-          <div class="collapsible-header"><i class="material-icons">mode_edit</i>Registros</div>
-          <div class="collapsible-body">
-            {% block registros %} {% endblock%}
-          </div>
-        </li>
-      </ul>
-      </div></div>
-    </div>
+    {% block contenido %}{% endblock %}
+
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-
-
+    {% block scripts %}{% endblock %}
   </body>
 </html>
