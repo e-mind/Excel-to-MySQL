@@ -30,21 +30,24 @@
                 <li>
                   <div class="collapsible-header"><i class="material-icons">input</i>Campos</div>
                   <div class="collapsible-body">
-                      <div class="input-field inline">
-                        <input id="campos" type="text" name="field_name">
-                        <label for="campos">Nombre</label>
-                      </div>
+                      <div id="fields">
+                          <div class="input-field inline">
+                              <input id="campo1" type="text" name="field_name[]">
+                              <label for="campo1">Nombre</label>
+                          </div>
 
-                      <div class="input-field inline">
-                        <select name="field_type">
-                          <option value="" disabled selected>Tipo de campo</option>
-                          <option value="int">Entero</option>
-                          <option value="float">Decimal</option>
-                          <option value="nvarchar(20)">Caracteres (1-20)</option>
-                          <option value="nvarchar(40)">Caracteres (21-40)</option>
-                          <option value="nvarchar(60)">Caracteres (41-60)</option>
-                        </select>
+                          <div class="input-field inline">
+                              <select name="field_type[]">
+                                  <option value="" disabled selected>Tipo de campo</option>
+                                  <option value="int">Entero</option>
+                                  <option value="float">Decimal</option>
+                                  <option value="nvarchar(20)">Caracteres (1-20)</option>
+                                  <option value="nvarchar(40)">Caracteres (21-40)</option>
+                                  <option value="nvarchar(60)">Caracteres (41-60)</option>
+                              </select>
+                          </div><br>
                       </div>
+                      <div><input type="button" value="Agregar campo" class="btn" id="btn_add"></div>
                   </div>
                 </li>
                 <li>
@@ -61,10 +64,8 @@
                       </div>
                   </div>
                 </li>
-                <li>
-                    <input type="submit" value="Subir" class="btn">
-                </li>
               </ul>
+              <br><input type="submit" value="Subir" class="btn">
         </div>
     </form>
 {% endblock %}
@@ -72,6 +73,16 @@
     <script>
         $(document).ready(function() {
             $('select').material_select();
-          });
+        });
+
+        var contador = 1;
+        $("#btn_add").click(function(){
+            contador++;
+            $("#fields").append('<div class="input-field inline"><input id="campo' + contador + '" type="text" name="field_name[]"><label for="campo' + contador + '">Nombre</label></div>');
+
+            $("#fields").append('<div class="input-field inline"><select name="field_type[]"><option value="" disabled selected>Tipo de campo</option><option value="int">Entero</option><option value="float">Decimal</option><option value="nvarchar(20)">Caracteres (1-20)</option><option value="nvarchar(40)">Caracteres (21-40)</option><option value="nvarchar(60)">Caracteres (41-60)</option></select></div><br>');
+
+            $('select').material_select();
+        });
     </script>
 {% endblock %}
