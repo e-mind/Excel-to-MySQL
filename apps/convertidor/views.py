@@ -1,28 +1,35 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.files.storage import FileSystemStorage
 import csv, re, collections
 
 # Create your views here.
 def bd(request):
     if request.method == 'POST':
-        fields = collections.OrderedDict()
-        first_field = True
-        first_row = True
-        first_col = True
-        db = request.POST['db'].lower().strip().replace(" ", "_")
-        table = request.POST['table'].lower().strip().replace(" ", "_")
-        field_name = request.POST.getlist('field_name[]')
-        field_type = request.POST.getlist('field_type[]')
+        # fields = collections.OrderedDict()
+        # first_field = True
+        # first_row = True
+        # first_col = True
+        # db = request.POST['db'].lower().strip().replace(" ", "_")
+        # table = request.POST['table'].lower().strip().replace(" ", "_")
+        # field_name = request.POST.getlist('field_name[]')
+        # field_type = request.POST.getlist('field_type[]')
+        #
+        # for field in field_name:
+        #     fn = field.lower().strip().replace(" ", "_")
+        #     ft = field_type[field_name.index(field)].lower().strip().replace(" ", "_")
+        #     fields[fn] = ft
 
-        for field in field_name:
-            fn = field.lower().strip().replace(" ", "_")
-            ft = field_type[field_name.index(field)].lower().strip().replace(" ", "_")
-            fields[fn] = ft
+        file = request.FILES['file']
+        fs = FileSystemStorage()
+        filename = fs.save(file.name, file)
+        uploaded_file_url = fs.url(filename)
 
-        for key, value in fields.items():
-            print(key, value)
+        print(uploaded_file_url)
 
-        # file = request.FILES['file']
+        # with open(filename, encoding='utf-8') as f:
+        #     for chunk in file.chunks():
+        #         print(chunk)
 
     #     print("\n\nCREATE DATABASE {};".format(db))
     #     print("CREATE TABLE {} (".format(table))
