@@ -1,18 +1,28 @@
 {% extends 'base/base1.html' %}
 {% block title %} Encriptador {% endblock %}
-{% block titulo %} Encriptador de texto {% endblock %}
+{% block titulo %} Encriptador y Desencriptador de texto{% endblock %}
 {% block content %}
   <form method="post">
     {% csrf_token %}
     <div class="row">
-      <div class="input-field col s12">
-        <textarea id="textarea1" class="materialize-textarea" name="datos"></textarea>
-        <label for="textarea1">Ingresa el texto a encriptar</label>
+      <div class="col s6">
+        <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea" name="encriptar">{{final0}}</textarea>
+          <label for="textarea1">Ingresa el texto</label>
+        </div>
+        <div class="row col s12 m12 l4 offset-m1 offset-l8">
+          <button  class="btn waves-effect waves-light" type="submit">Encriptar</button>
+        </div>
       </div>
-    <div class="row col s12 m12 l4 offset-m1 offset-l8">
-      <button  class="btn waves-effect waves-light" type="submit">Guardar
-        <i class="material-icons right" name="action">send</i>
-      </button>
-    </div>
-  </form>
+        <div class="row">
+          <div class="col s6">
+            <div class="input-field col s12">
+              <textarea id="textarea1" class="materialize-textarea" name="desencriptar">{{final}}</textarea>
+              <label for="textarea1">Ingresa el texto</label>
+            </div>
+            <div class="row col s12 m12 l4 offset-m1 offset-l8">
+              <button  class="btn waves-effect waves-light" type="submit">desencriptar</button>
+            </div>
+          </div>
+      </form>
 {% endblock %}

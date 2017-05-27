@@ -1,4 +1,5 @@
 from django import forms
 
 class DataForm(forms.Form):
-    datos = forms.CharField()
+    encriptar = forms.CharField()
+    desencriptar = forms.CharField()
