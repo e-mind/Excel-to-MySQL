@@ -4,7 +4,22 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import csv, re, collections
 
-# Create your views here.
+re_int = re.compile('[+-]?[0-9]+')
+re_float = re.compile('[+-]?[0-9]*[.]?[0-9]+')
+re_char = re.compile('[\w\s]')
+re_date = re.compile('[0-9]{4}-[1-12]-[1-31]')
+re_time = re.compile('[0-23]:[0-59]')
+re_datetime = re.compile('[0-9]{4}-[1-12]-[1-31] [0-23]:[0-59]')
+
+def validate_col(col):
+    col = col if re_int.findall(col) else error_int
+    col = col if re_float.findall(col) else error_float
+    col = "'{}'".format(col) if re_char.findall(col) else error_char
+    col = "'{}'".format(col) if re_date.findall(col) else error_date
+    col = "'{}'".format(col) if re_time.findall(col) else error_time
+    col = "'{}'".format(col) if re_datetime.findall(col) else error_datetime
+    return col
+
 def bd(request):
     if request.method == 'POST':
         fields = collections.OrderedDict()
@@ -49,13 +64,15 @@ def bd(request):
                 for col in row:
                     if first_col is True:
                         first_col = False
+                        # sql += validate_col(col)
                         sql += col
                     else:
+                        # sql += ", {}".format(validate_col(col))
                         sql += ", {}".format(col)
                 sql += ");"
                 first_col = True
 
-        file_name, file_extension = file.name.split(".")
+        file_name, file_extension = file.name.rsplit(".")
         new_file = file_name + "_SQL.sql"
         with open(settings.MEDIA_ROOT + new_file, 'w', encoding='utf-8', newline='') as f:
             f.write(sql)

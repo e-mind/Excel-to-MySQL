@@ -3,7 +3,11 @@
 {% block titulo %} Crear una BD de forma sencilla {% endblock %}
 
 {% block contenido %}
-    {{ sql }}
-    <br><br><br>
-    <a href="{{ MEDIA_URL }}{{ new_file }}">Descarga el nuevo archivo</a>
+    <div class="row">
+        <div class="col s12 m8 l6 offset-m2 offset-l3">
+            <a href="{{ MEDIA_URL }}{{ new_file }}" class="btn center-align">Descarga el nuevo archivo</a>
+            <br><br><br>
+            {{ sql }}
+        </div>
+    </div>
 {% endblock %}

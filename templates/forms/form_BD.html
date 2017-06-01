@@ -5,7 +5,7 @@
 {% block contenido %}
     <form action="#" method="post" enctype="multipart/form-data"> {% csrf_token %}
         <div class="row">
-          <div class="col s12 m8 l6 offset-m2 offset-l3"><div class="row">
+          <div class="col s12 m8 l6 offset-m2 offset-l3">
             <ul class="collapsible" data-collapsible="accordion">
                 <li>
                   <div class="collapsible-header"><i class="material-icons">view_headline</i>Base de datos</div>
@@ -36,16 +36,19 @@
                               <label for="campo1">Nombre</label>
                           </div>
 
-                          <div class="input-field inline">
-                              <select name="field_type[]">
-                                  <option value="" disabled selected>Tipo de campo</option>
-                                  <option value="int">Entero</option>
-                                  <option value="float">Decimal</option>
-                                  <option value="nvarchar(20)">Caracteres (1-20)</option>
-                                  <option value="nvarchar(40)">Caracteres (21-40)</option>
-                                  <option value="nvarchar(60)">Caracteres (41-60)</option>
-                              </select>
-                          </div><br>
+                            <div class="input-field inline">
+                              <div class="input-field inline">
+                                  <select name="field_type[]">
+                                      <option value="" disabled selected>Tipo de campo</option>
+                                      <option value="int">Entero</option>
+                                      <option value="float">Decimal</option>
+                                      <option value="varchar">Caracter</option>
+                                      <option value="date">Fecha</option>
+                                      <option value="time">Hora</option>
+                                      <option value="datetime">Fecha y Hora</option>
+                                  </select>
+                              </div>
+                          </div>
                       </div>
                       <div><input type="button" value="Agregar campo" class="btn" id="btn_add"></div>
                   </div>
@@ -65,24 +68,69 @@
                   </div>
                 </li>
               </ul>
-              <br><input type="submit" value="Subir" class="btn">
+              <br><input type="submit" value="Subir" class="btn center-align">
+          </div>
         </div>
     </form>
 {% endblock %}
 {% block scripts %}
     <script>
+        var field_name = 1;
+        var add_char_field = function(select_field){
+            var field_id = select_field.parent()
+                                       .parent()
+                                       .parent()
+                                       .parent()
+                                       .children()
+                                       .children()[0]
+                                       .getAttribute('id');
+            if(select_field.val() == 'varchar') {
+                select_field.parent()
+                            .parent()
+                            .parent()
+                            .append('<div class="input-field inline"><input id="char_' + field_id + '" type="text" name="' + field_id + '"><label for="char_' + field_id + '">Tamaño</label></div>');
+            }
+            else {
+                console.log(select_field.parent()
+                            .parent()
+                            .parent()
+                            .children()[1]
+                            .remove()
+                        );
+            }
+        }
+
         $(document).ready(function() {
             $('select').material_select();
         });
+        // $('select').change(function(){
+        //     field_char++;
+        //     if($(this).val() == 'varchar') {
+        //         $(this).parent().parent().append('<div class="input-field inline"><input id="char' + field_char + '" type="text" name="char_size[]"><label for="char' + field_char + '">Tamaño</label></div>');
+        //         console.log($(this).parent().parent())
+        //     }
+        // });
 
-        var contador = 1;
+
         $("#btn_add").click(function(){
-            contador++;
-            $("#fields").append('<div class="input-field inline"><input id="campo' + contador + '" type="text" name="field_name[]"><label for="campo' + contador + '">Nombre</label></div>');
+            field_name++;
+            $("#fields").append('<br><div class="input-field inline"><input id="campo' + field_name + '" type="text" name="field_name[]"><label for="campo' + field_name + '">Nombre</label></div>');
 
-            $("#fields").append('<div class="input-field inline"><select name="field_type[]"><option value="" disabled selected>Tipo de campo</option><option value="int">Entero</option><option value="float">Decimal</option><option value="nvarchar(20)">Caracteres (1-20)</option><option value="nvarchar(40)">Caracteres (21-40)</option><option value="nvarchar(60)">Caracteres (41-60)</option></select></div><br>');
+            $("#fields").append('<div class="inline"><div class="input-field inline"><select name="field_type[]"><option value="" disabled selected>Tipo de campo</option><option value="int">Entero</option><option value="float">Decimal</option><option value="varchar">Caracter</option><option value="date">Fecha</option><option value="time">Hora</option><option value="datetime">Fecha y Hora</option></select></div></div>');
 
             $('select').material_select();
+            // $('select').change(function(){
+                // add_char_field($(this))
+            //     field_char++;
+            //     if($(this).val() == 'varchar') {
+            //         $(this).parent().parent().append('<div class="input-field inline"><input id="char' + field_char + '" type="text" name="char_size[]"><label for="char' + field_char + '">Tamaño</label></div>');
+            //         console.log($(this).parent().parent())
+            //     }
+            // });
+        });
+
+        $('select').change(function(){
+            add_char_field($(this))
         });
     </script>
 {% endblock %}
